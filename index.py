@@ -11,17 +11,20 @@ from lime import lime_tabular
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 import io
+from dotenv import load_dotenv
 import os
 import matplotlib
 matplotlib.use('Agg')  # Set a non-interactbackend
 import matplotlib.pyplot as plt
 
 
+load_dotenv()
+
 app = Flask(__name__)
 CORS(app)
-
-app.config['MONGO_URI'] = 'mongodb://localhost:27017/health_assessment'
-app.config['JWT_SECRET_KEY'] = 'your-secret-key'  
+# 
+app.config['MONGO_URI'] = os.getenv('MONGO_URI')
+app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')  
 mongo = PyMongo(app)
 bcrypt = Bcrypt(app)
 jwt = JWTManager(app)
